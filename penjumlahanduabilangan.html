@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Penjumlahan Dua Bilangan</title>
+</head>
+<body>
+    <h1>Penjumlahan Dua Bilangan</h1>
+    
+    <div>
+        <input type="number" id="bilangan1" value="4" onchange="hitung()">
+        <span>+</span>
+        <input type="number" id="bilangan2" value="5" onchange="hitung()">
+        <span>=</span>
+        <span id="hasil">9</span>
+    </div>
+
+    <script>
+        function hitung() {
+            var bilangan1 = document.getElementById('bilangan1').value;
+            var bilangan2 = document.getElementById('bilangan2').value;
+            var hasil = parseInt(bilangan1) + parseInt(bilangan2);
+            document.getElementById('hasil').innerHTML = hasil;
+        }
+    </script>
+</body>
+</html>

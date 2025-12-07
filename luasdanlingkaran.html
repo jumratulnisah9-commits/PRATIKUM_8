@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kalkulator Lingkaran</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            background-color: white;
+            border-radius: 20px;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+            width: 100%;
+            max-width: 800px;
+            overflow: hidden;
+            animation: fadeIn 0.8s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .header {
+            background: linear-gradient(to right, #2575fc, #6a11cb);
+            color: white;
+            padding: 25px;
+            text-align: center;
+            position: relative;
+        }
+
+        .header h1 {
+            font-size: 2.2rem;
+            margin-bottom: 8px;
+            font-weight: 700;
+        }
+
+        .header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        .header i {
+            position: absolute;
+            top: 25px;
+            right: 25px;
+            font-size: 2.5rem;
+            opacity: 0.7;
+        }
+
+        .content {
+            display: flex;
+            flex-wrap: wrap;
+            padding: 30px;
+        }
+
+        .input-section {
+            flex: 1;
+            min-width: 300px;
+            padding-right: 30px;
+            border-right: 2px solid #f0f0f0;
+        }
+
+        .result-section {
+            flex: 1;
+            min-width: 300px;
+            padding-left: 30px;
+        }
+
+        .section-title {
+            font-size: 1.4rem;
+            color: #2575fc;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #f0f0f0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section-title i {
+            color: #6a11cb;
+        }
+
+        .input-group {
+            margin-bottom: 25px;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #333;
+            font-size: 1.1rem;
+        }
+
+        .input-container {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .input-container i {
+            position: absolute;
+            left: 15px;
+            color: #6a11cb;
+            font-size: 1.2rem;
+        }
+
+        .input-container input {
+            width: 100%;
+            padding: 15px 15px 15px 50px;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            transition: all 0.3s;
+        }
+
+        .input-container input:focus {
+            outline: none;
+            border-color: #6a11cb;
+            box-shadow: 0 0 0 3px rgba(106, 17, 203, 0.1);
+        }
+
+        .unit {
+            position: absolute;
+            right: 15px;
+            color: #666;
+            font-weight: 600;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 16px;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .btn.calculate {
+            background: linear-gradient(to right, #2575fc, #6a11cb);
+            color: white;
+        }
+
+        .btn.calculate:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 7px 15px rgba(37, 117, 252, 0.3);
+        }
+
+        .btn.reset {
+            background-color: #f0f0f0;
+            color: #666;
+        }
+
+        .btn.reset:hover {
+            background-color: #e0e0e0;
+        }
+
+        .result-item {
+            background-color: #f8f9ff;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-left: 5px solid #6a11cb;
+            transition: transform 0.3s;
+        }
+
+        .result-item:hover {
+            transform: translateX(5px);
+        }
+
+        .result-label {
+            font-size: 1.1rem;
+            color: #666;
+            margin-bottom: 5px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .result-value {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #2575fc;
+        }
+
+        .result-unit {
+            font-size: 1.1rem;
+            color: #666;
+            margin-left: 5px;
+        }
+
+        .formula {
+            background-color: #f0f7ff;
+            border-radius: 12px;
+            padding: 20px;
+            margin-top: 30px;
+        }
+
+        .formula h3 {
+            color: #2575fc;
+            margin-bottom: 15px;
+            font-size: 1.2rem;
+        }
+
+        .formula-item {
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .formula-item i {
+            color: #6a11cb;
+            font-size: 1.2rem;
+        }
+
+        .error {
+            color: #ff4757;
+            font-weight: 600;
+            margin-top: 10px;
+            padding: 12px;
+            background-color: #ffeaea;
+            border-radius: 8px;
+            border-left: 4px solid #ff4757;
+            display: none;
+            animation: shake 0.5s;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
+
+        .footer {
+            text-align: center;
+            padding: 20px;
+            background-color: #f8f9ff;
+            color: #666;
+            font-size: 0.9rem;
+            border-top: 1px solid #eee;
+        }
+
+        @media (max-width: 768px) {
+            .content {
+                flex-direction: column;
+                padding: 20px;
+            }
+            
+            .input-section, .result-section {
+                padding: 0;
+                border: none;
+            }
+            
+            .input-section {
+                margin-bottom: 30px;
+                border-bottom: 2px solid #f0f0f0;
+                padding-bottom: 30px;
+            }
+            
+            .header h1 {
+                font-size: 1.8rem;
+            }
+            
+            .result-value {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1><i class="fas fa-circle"></i> Kalkulator Lingkaran</h1>
+            <p>Hitung luas dan keliling lingkaran dengan mudah</p>
+            <i class="fas fa-calculator"></i>
+        </div>
+        
+
+        <div class="content">
+            <div class="input-section">
+                <div class="section-title">
+                    <i class="fas fa-pencil-alt"></i>
+                    <span>Input Data</span>
+                </div>
+                
+                <div class="input-group">
+                    <label for="radius">Jari-Jari Lingkaran</label>
+                    <div class="input-container">
+                        <i class="fas fa-ruler"></i>
+                        <input type="number" id="radius" placeholder="Masukkan jari-jari" step="any" min="0.01">
+                        <div class="unit">cm</div>
+                    </div>
+                </div>
+                
+                <div class="error" id="error-message">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <span id="error-text">Error message will appear here</span>
+                </div>
+                
+                <div class="button-group">
+                    <button class="btn calculate" onclick="calculate()">
+                        <i class="fas fa-calculator"></i>
+                        Hitung
+                    </button>
+                    <button class="btn reset" onclick="resetForm()">
+                        <i class="fas fa-redo"></i>
+                        Reset
+                    </button>
+                </div>
+                
+                <div class="formula">
+                    <h3><i class="fas fa-book"></i> Rumus</h3>
+                    <div class="formula-item">
+                        <i class="fas fa-square"></i>
+                        <span><strong>Luas</strong> = π × r² = 3.1416 × r × r</span>
+                    </div>
+                    <div class="formula-item">
+                        <i class="fas fa-ruler-combined"></i>
+                        <span><strong>Keliling</strong> = 2 × π × r = 2 × 3.1416 × r</span>
+                    </div>
+                    <div class="formula-item">
+                        <i class="fas fa-info-circle"></i>
+                        <span>π (pi) ≈ 3.14159265359</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="result-section">
+                <div class="section-title">
+                    <i class="fas fa-chart-bar"></i>
+                    <span>Hasil Perhitungan</span>
+                </div>
+                
+                <div class="result-item">
+                    <div class="result-label">
+                        <i class="fas fa-ruler"></i>
+                        <span>Jari-Jari Lingkaran</span>
+                    </div>
+                    <div class="result-value">
+                        <span id="result-radius">0</span>
+                        <span class="result-unit">cm</span>
+                    </div>
+                </div>
+                
+                <div class="result-item">
+                    <div class="result-label">
+                        <i class="fas fa-square"></i>
+                        <span>Luas Lingkaran</span>
+                    </div>
+                    <div class="result-value">
+                        <span id="result-area">0</span>
+                        <span class="result-unit">cm²</span>
+                    </div>
+                </div>
+                
+                <div class="result-item">
+                    <div class="result-label">
+                        <i class="fas fa-ruler-combined"></i>
+                        <span>Keliling Lingkaran</span>
+                    </div>
+                    <div class="result-value">
+                        <span id="result-circumference">0</span>
+                        <span class="result-unit">cm</span>
+                    </div>
+                </div>
+                
+                <div class="formula">
+                    <h3><i class="fas fa-lightbulb"></i> Informasi</h3>
+                    <div class="formula-item">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Hasil dibulatkan 2 angka desimal</span>
+                    </div>
+                    <div class="formula-item">
+                        <i class="fas fa-history"></i>
+                        <span>Perhitungan menggunakan π = 3.14159265359</span>
+                    </div>
+                    <div class="formula-item">
+                        <i class="fas fa-mouse-pointer"></i>
+                        <span>Tekan Enter untuk menghitung secara cepat</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>© 2023 Kalkulator Lingkaran | Dibuat dengan <i class="fas fa-heart" style="color: #ff4757;"></i></p>
+        </div>
+    </div>
+
+    <script>
+
+        function calculate() {
+
+            const radiusInput = document.getElementById('radius');
+            const radiusValue = parseFloat(radiusInput.value);
+            const errorDiv = document.getElementById('error-message');
+            const errorText = document.getElementById('error-text');
+
+            errorDiv.style.display = 'none';
+
+            if (isNaN(radiusValue) || radiusValue <= 0) {
+                errorText.textContent = 'Masukkan jari-jari yang valid (angka positif lebih besar dari 0)!';
+                errorDiv.style.display = 'flex';
+                return;
+            }
+            
+            if (radiusValue > 1000000) {
+                errorText.textContent = 'Jari-jari terlalu besar! Masukkan nilai yang lebih kecil.';
+                errorDiv.style.display = 'flex';
+                return;
+            }
+
+            const PI = Math.PI;
+
+            const area = PI * Math.pow(radiusValue, 2);
+            const circumference = 2 * PI * radiusValue;
+ 
+            document.getElementById('result-radius').textContent = radiusValue.toFixed(2);
+            document.getElementById('result-area').textContent = area.toFixed(2);
+            document.getElementById('result-circumference').textContent = circumference.toFixed(2);
+
+            const resultItems = document.querySelectorAll('.result-item');
+            resultItems.forEach(item => {
+                item.style.transform = 'translateX(0)';
+                setTimeout(() => {
+                    item.style.transform = 'translateX(5px)';
+                    setTimeout(() => {
+                        item.style.transform = 'translateX(0)';
+                    }, 150);
+                }, 100);
+            });
+        }
+
+        function resetForm() {
+            document.getElementById('radius').value = '';
+            document.getElementById('result-radius').textContent = '0';
+            document.getElementById('result-area').textContent = '0';
+            document.getElementById('result-circumference').textContent = '0';
+            document.getElementById('error-message').style.display = 'none';
+
+            document.getElementById('radius').focus();
+        }
+
+        document.getElementById('radius').addEventListener('keypress', function(event) {
+            if (event.key === 'Enter') {
+                event.preventDefault();
+                calculate();
+            }
+        });
+
+        document.getElementById('radius').addEventListener('input', function() {
+            document.getElementById('error-message').style.display = 'none';
+            if (this.value === '') {
+                document.getElementById('result-radius').textContent = '0';
+                document.getElementById('result-area').textContent = '0';
+                document.getElementById('result-circumference').textContent = '0';
+            }
+        });
+
+        window.onload = function() {
+            document.getElementById('radius').value = '7';
+            calculate();
+        };
+
+        document.getElementById('radius').addEventListener('focus', function() {
+            this.style.boxShadow = '0 0 0 3px rgba(106, 17, 203, 0.2)';
+        });
+        
+        document.getElementById('radius').addEventListener('blur', function() {
+            this.style.boxShadow = '';
+        });
+    </script>
+</body>
+</html>
